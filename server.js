@@ -5,6 +5,9 @@ const AdminBroOptions = require("./admin");
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded());
+
 const adminBro = new AdminBro(AdminBroOptions);
 
 const ADMIN = {

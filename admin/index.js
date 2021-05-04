@@ -58,7 +58,7 @@ module.exports = {
         uploadFeature({
           provider: { local: { bucket: path.join(__dirname, "../public") } },
           properties: {
-            key: "image",
+            key: "avatar",
           },
         }),
       ],
