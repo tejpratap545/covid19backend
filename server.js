@@ -24,7 +24,7 @@ const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
 });
 
 app.use(adminBro.options.rootPath, router);
-
+app.use("/public", express.static("public"));
 require("./routes/index")(app);
 const run = async () => {
   const mongooseConnection = await mongoose.connect(process.env.MONGO_URL);
