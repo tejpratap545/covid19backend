@@ -2,7 +2,7 @@ const AdminBro = require("admin-bro");
 const AdminBroMongoose = require("@admin-bro/mongoose");
 const upload = require("./resources/upload");
 AdminBro.registerAdapter(AdminBroMongoose);
-const display = require("./resources/Display");
+const display = require("./resources/display");
 const sort = require("./resources/sort");
 const mongoose = { name: "mongooseResources", icon: "SpineLabel" };
 const CitySchema = require("../models/city");
