@@ -1,8 +1,109 @@
 const Resource = require("../models/resource");
-
+const { ObjectId } = require("mongodb");
 exports.index = async function (req, res) {
-  const Resources = await Resource.find({});
-  res.status(200).json({ Resources });
+  aggregate_options = [];
+
+  const options = {
+    page: parseInt(req.query.page) || 1,
+    limit: parseInt(req.query.limit) || 20,
+    customLabels: {
+      totalDocs: "totalResults",
+      docs: "results",
+    },
+  };
+
+  //pupulated
+  aggregate_options.push(
+    {
+      $lookup: {
+        from: "cities",
+        localField: "city",
+        foreignField: "_id",
+        as: "city",
+      },
+    },
+
+    {
+      $lookup: {
+        from: "status",
+        localField: "status",
+        foreignField: "_id",
+        as: "status",
+      },
+    },
+
+    {
+      $lookup: {
+        from: "resourcetypes",
+        localField: "resourceType",
+        foreignField: "_id",
+        as: "resourceType",
+      },
+    },
+    {
+      $unwind: "$city",
+    },
+    {
+      $unwind: "$status",
+    },
+    {
+      $unwind: "$resourceType",
+    }
+  );
+
+  //search
+  if (req.query.search) {
+    aggregate_options.push({
+      $match: {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { address: { $regex: req.query.search, $options: "i" } },
+          { "city.name": { $regex: req.query.search, $options: "i" } },
+          { "city.status": { $regex: req.query.search, $options: "i" } },
+          {
+            "resourceType.name": { $regex: req.query.search, $options: "i" },
+          },
+        ],
+      },
+    });
+  }
+
+  //filter
+  if (req.query.name) {
+    aggregate_options.push({
+      $match: {
+        name: req.query.name,
+      },
+    });
+  }
+
+  if (req.query.city) {
+    aggregate_options.push({
+      $match: {
+        "city._id": new ObjectId(req.query.city),
+      },
+    });
+  }
+  if (req.query.status) {
+    aggregate_options.push({
+      $match: {
+        "status._id": new ObjectId(req.query.status),
+      },
+    });
+  }
+  if (req.query.resource_type) {
+    aggregate_options.push({
+      $match: {
+        "resourceType._id": new ObjectId(req.query.resource_type),
+      },
+    });
+  }
+
+  const myAggregate = Resource.aggregate(aggregate_options);
+  const result = await Resource.aggregatePaginate(myAggregate, options);
+  await Resource.populate(result, { path: "city" });
+
+  res.status(200).json(result);
 };
 
 exports.store = async (req, res, _) => {

@@ -4,10 +4,7 @@ const AdminBroExpress = require("@admin-bro/express");
 const AdminBroOptions = require("./admin");
 const express = require("express");
 const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded());
-
+const cors = require("cors");
 const adminBro = new AdminBro(AdminBroOptions);
 
 const ADMIN = {
@@ -25,7 +22,7 @@ const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
   cookieName: "_session_id",
   cookiePassword: process.env.cookiePassword || "cookiePassword",
 });
-
+app.use(cors());
 app.use(adminBro.options.rootPath, router);
 app.use("/public", express.static("public"));
 require("./routes/index")(app);

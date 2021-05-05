@@ -13,6 +13,9 @@ const VolunteerSchema = mongoose.Schema(
       required: true,
       ref: "Status",
     },
+    otherProperties: {
+      type: Object,
+    },
   },
   { timestamps: true }
 );

@@ -4,12 +4,13 @@ const multer = require("multer");
 
 const User = require("../controllers/user");
 var upload = multer({ dest: "uploads/" });
+const apiKey = require("../middlewares/api-key");
 const router = express.Router();
 
 router.get("/", User.index);
-router.post("/", User.store);
-router.get("/:id", User.show);
-router.put("/:id", User.update);
-router.delete("/:id", User.destroy);
+router.post("/", apiKey, User.store);
+router.get("/:id", apiKey, User.show);
+router.put("/:id", apiKey, User.update);
+router.delete("/:id", apiKey, User.destroy);
 
 module.exports = router;

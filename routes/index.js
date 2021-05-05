@@ -4,7 +4,11 @@ const resource = require("./resource");
 const resourceType = require("./resource-type");
 const volunteer = require("./volunteer");
 const status = require("./status");
+const apiKey = require("../middlewares/api-key");
+var bodyParser = require("body-parser");
+
 module.exports = (app) => {
+  app.use(bodyParser.json());
   app.use("/api/user", user);
   app.use("/api/city", city);
   app.use("/api/resource", resource);

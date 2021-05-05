@@ -1,6 +1,6 @@
-const { json } = require("express");
 const mongoose = require("mongoose");
-const validator = require("validator");
+
+const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 const ResourceSchema = new mongoose.Schema(
   {
     name: {
@@ -36,7 +36,8 @@ const ResourceSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+ResourceSchema.plugin(aggregatePaginate);
+ResourceSchema.index({ name: 1, address: 1 }); // schema level
 const Resource = mongoose.model("Resource", ResourceSchema);
 
 module.exports = Resource;
