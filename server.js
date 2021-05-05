@@ -28,7 +28,7 @@ app.use("/public", express.static("public"));
 require("./routes/index")(app);
 const run = async () => {
   const mongooseConnection = await mongoose.connect(process.env.MONGO_URL);
-  app.listen(8004);
+  app.listen(process.env.PORT || "8080");
 };
 
 run();
