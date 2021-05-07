@@ -13,6 +13,8 @@ const StatusSchema = require("../models/status");
 const uploadFeature = require("@admin-bro/upload");
 const path = require("path");
 const UserSchema = require("../models/user");
+
+const user = require("./resources/user");
 module.exports = {
   resources: [
     {
@@ -53,15 +55,7 @@ module.exports = {
     },
     {
       resource: UserSchema,
-      options: { parent: mongoose, ...sort, ...display, ...upload },
-      features: [
-        uploadFeature({
-          provider: { local: { bucket: path.join(__dirname, "../public") } },
-          properties: {
-            key: "avatar",
-          },
-        }),
-      ],
+      ...user,
     },
   ],
   version: {

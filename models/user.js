@@ -14,6 +14,16 @@ const UserSchema = mongoose.Schema(
       required: true,
       ref: "City",
     },
+    encryptedPassword: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ["superadmin", "admin", "volunteer"],
+      required: true,
+    },
+    superAdmin: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );
