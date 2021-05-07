@@ -4,7 +4,7 @@ const upload = require("./resources/upload");
 AdminBro.registerAdapter(AdminBroMongoose);
 const display = require("./resources/display");
 const sort = require("./resources/sort");
-const mongoose = { name: "mongooseResources", icon: "SpineLabel" };
+const mongoose = { name: "Database", icon: "SpineLabel32" };
 const CitySchema = require("../models/city");
 const ResourceSchema = require("../models/resource");
 const ResourceTypeSchema = require("../models/resourceType");
