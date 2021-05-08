@@ -17,6 +17,7 @@ module.exports = {
         },
       },
     },
+
     actions: {
       new: {
         before: async (request) => {
@@ -33,6 +34,7 @@ module.exports = {
           return request;
         },
       },
+      ...display,
     },
   },
 };
