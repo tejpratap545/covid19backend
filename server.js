@@ -12,7 +12,7 @@ const Volunteer = require("./models/volunteer");
 const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
   authenticate: async (email, password) => {
     const user = await Volunteer.findOne({
-      $or: [({ email: email }, { _id: email })],
+      $or: [({ email: email }, { _id: email }, { mobileNumber: email })],
     });
     if (user) {
       const matched = await bcrypt.compare(password, user.encryptedPassword);
