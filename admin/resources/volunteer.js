@@ -1,11 +1,10 @@
 const bcrypt = require("bcrypt");
 const display = require("./display");
 const sort = require("./sort");
-const uploadFeature = require("@admin-bro/upload");
-const path = require("path");
-const mongoose = { name: "mongooseResources", icon: "SpineLabel" };
+const mongoose = { name: "Covidapp", icon: "SpineLabel" };
 module.exports = {
   options: {
+    parent: mongoose,
     properties: {
       encryptedPassword: { isVisible: false },
       password: {
@@ -36,13 +35,4 @@ module.exports = {
       },
     },
   },
-
-  features: [
-    uploadFeature({
-      provider: { local: { bucket: path.join(__dirname, "../../public") } },
-      properties: {
-        key: "avatar",
-      },
-    }),
-  ],
 };

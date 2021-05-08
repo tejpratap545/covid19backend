@@ -1,8 +1,10 @@
 const Volunteer = require("../models/volunteer");
 
 exports.index = async function (req, res) {
-  const cities = await Volunteer.find({});
-  res.status(200).json({ cities });
+  const volunteers = await Volunteer.find({})
+    .populate("superAdmin")
+    .populate("city");
+  res.status(200).json(volunteers);
 };
 
 exports.store = async (req, res, _) => {
@@ -16,7 +18,9 @@ exports.store = async (req, res, _) => {
 
 exports.show = async function (req, res) {
   try {
-    const volunteer = await Volunteer.findById(req.params.id);
+    const volunteer = await Volunteer.findById(req.params.id)
+      .populate("superAdmin")
+      .populate("city");
 
     if (!volunteer)
       return res.status(401).json({ message: "Volunteer does not exist" });

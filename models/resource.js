@@ -7,6 +7,7 @@ const ResourceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
     resourceType: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -30,8 +31,23 @@ const ResourceSchema = new mongoose.Schema(
       required: true,
       ref: "Status",
     },
+
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Volunteer",
+    },
     otherProperties: {
       type: Object,
+    },
+  },
+  {
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        delete ret.__v;
+
+        return ret;
+      },
     },
   },
   { timestamps: true }

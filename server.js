@@ -6,18 +6,22 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const adminBro = new AdminBro(AdminBroOptions);
-
-const ADMIN = {
-  email: process.env.ADMIN_EMAIL || "admin@covid.com",
-  password: process.env.ADMIN_PASSWORD || "password",
-};
+const bcrypt = require("bcrypt");
+const Volunteer = require("./models/volunteer");
 
 const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
   authenticate: async (email, password) => {
-    if (ADMIN.password === password && ADMIN.email === email) {
-      return ADMIN;
+    const user = await Volunteer.findOne({
+      $or: [({ email: email }, { _id: email })],
+    });
+    if (user) {
+      const matched = await bcrypt.compare(password, user.encryptedPassword);
+      if (matched) {
+        return user;
+      }
+      return false;
     }
-    return null;
+    return false;
   },
   cookieName: "_session_id",
   cookiePassword: process.env.cookiePassword || "cookiePassword",

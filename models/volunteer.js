@@ -13,8 +13,33 @@ const VolunteerSchema = mongoose.Schema(
       required: true,
       ref: "Status",
     },
+    encryptedPassword: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ["superadmin", "admin", "volunteer"],
+      required: true,
+    },
+    superAdmin: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Volunteer",
+    },
+    city: [{ type: mongoose.Schema.Types.ObjectId, ref: "City" }],
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Volunteer",
+    },
     otherProperties: {
       type: Object,
+    },
+  },
+  {
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        delete ret.__v;
+        delete ret.encryptedPassword;
+        return ret;
+      },
     },
   },
   { timestamps: true }

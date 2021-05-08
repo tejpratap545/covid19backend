@@ -4,7 +4,7 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --watch server.js",
+    "dev": "nodemon --watch .  server.js",
     "start": "node server.js"
   },
   "dependencies": {

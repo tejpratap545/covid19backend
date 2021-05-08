@@ -4,7 +4,7 @@ const upload = require("./resources/upload");
 AdminBro.registerAdapter(AdminBroMongoose);
 const display = require("./resources/display");
 const sort = require("./resources/sort");
-const mongoose = { name: "Database", icon: "SpineLabel32" };
+const mongoose = { name: "Covidapp", icon: "SpineLabel32" };
 const CitySchema = require("../models/city");
 const ResourceSchema = require("../models/resource");
 const ResourceTypeSchema = require("../models/resourceType");
@@ -12,9 +12,8 @@ const VolunteerSchema = require("../models/volunteer");
 const StatusSchema = require("../models/status");
 const uploadFeature = require("@admin-bro/upload");
 const path = require("path");
-const UserSchema = require("../models/user");
 
-const user = require("./resources/user");
+const volunteer = require("./resources/volunteer");
 module.exports = {
   resources: [
     {
@@ -43,19 +42,7 @@ module.exports = {
     },
     {
       resource: VolunteerSchema,
-      options: { parent: mongoose, ...sort, ...display, ...upload },
-      features: [
-        uploadFeature({
-          provider: { local: { bucket: path.join(__dirname, "../public") } },
-          properties: {
-            key: "image",
-          },
-        }),
-      ],
-    },
-    {
-      resource: UserSchema,
-      ...user,
+      ...volunteer,
     },
   ],
   version: {
