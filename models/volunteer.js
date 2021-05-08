@@ -6,7 +6,6 @@ const VolunteerSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    image: String,
     mobileNumber: String,
     status: {
       type: mongoose.Schema.Types.ObjectId,
