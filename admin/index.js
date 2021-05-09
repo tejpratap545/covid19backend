@@ -12,13 +12,14 @@ const VolunteerSchema = require("../models/volunteer");
 const StatusSchema = require("../models/status");
 const uploadFeature = require("@admin-bro/upload");
 const path = require("path");
+const admin = require("./resources/admin");
 
 const volunteer = require("./resources/volunteer");
 module.exports = {
   resources: [
     {
       resource: CitySchema,
-      options: { parent: mongoose, ...sort, ...display, ...upload },
+      options: { parent: mongoose, ...admin },
       features: [
         uploadFeature({
           provider: { local: { bucket: path.join(__dirname, "../public") } },
@@ -30,15 +31,15 @@ module.exports = {
     },
     {
       resource: StatusSchema,
-      options: { parent: mongoose, ...sort, ...display, ...upload },
+      options: { parent: mongoose, ...admin },
     },
     {
       resource: ResourceSchema,
-      options: { parent: mongoose, ...sort, ...display, ...upload },
+      options: { parent: mongoose, ...admin },
     },
     {
       resource: ResourceTypeSchema,
-      options: { parent: mongoose, ...sort, ...display, ...upload },
+      options: { parent: mongoose, ...admin },
     },
     {
       resource: VolunteerSchema,
@@ -51,8 +52,20 @@ module.exports = {
   },
   branding: {
     companyName: "Covid Help Care ",
+    softwareBrothers: false,
+    logo: "",
   },
   pages: {},
+  locale: {
+    translations: {
+      labels: {
+        loginWelcome: "",
+      },
+      messages: {
+        loginWelcome: "",
+      },
+    },
+  },
   dashboard: {
     handler: async () => {
       return { some: "output" };

@@ -11,8 +11,12 @@ const Volunteer = require("./models/volunteer");
 
 const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
   authenticate: async (email, password) => {
+    conditions = [{ email: email }, { mobileNumber: email }];
+
+    if (mongoose.Types.ObjectId.isValid(email)) conditions.push({ _id: email });
+
     const user = await Volunteer.findOne({
-      $or: [{ email: email }, { _id: email }, { mobileNumber: email }],
+      $or: conditions,
     });
     if (user) {
       const matched = await bcrypt.compare(password, user.encryptedPassword);
@@ -23,7 +27,6 @@ const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
     }
     return false;
   },
-  cookieName: "_session_id",
   cookiePassword: process.env.cookiePassword || "cookiePassword",
 });
 app.use(cors());
