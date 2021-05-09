@@ -59,10 +59,10 @@ module.exports = {
   locale: {
     translations: {
       labels: {
-        loginWelcome: "",
+        loginWelcome: "CovidAid Admin",
       },
       messages: {
-        loginWelcome: "",
+        loginWelcome: "Login to covidaid Admin Dashboard",
       },
     },
   },
