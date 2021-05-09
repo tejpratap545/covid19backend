@@ -5,6 +5,7 @@ const mongoose = { name: "Covidapp", icon: "SpineLabel" };
 module.exports = {
   options: {
     parent: mongoose,
+    ...sort,
     properties: {
       encryptedPassword: { isVisible: false },
       password: {
@@ -20,6 +21,7 @@ module.exports = {
 
     actions: {
       new: {
+        showInDrawer: true,
         before: async (request) => {
           if (request.payload.password) {
             request.payload = {
@@ -34,7 +36,26 @@ module.exports = {
           return request;
         },
       },
-      ...display,
+      edit: {
+        showInDrawer: true,
+        before: async (request) => {
+          console.log(request.payload);
+          if (request.payload.password) {
+            request.payload = {
+              ...request.payload,
+              encryptedPassword: await bcrypt.hash(
+                request.payload.password,
+                10
+              ),
+              password: undefined,
+            };
+          }
+          return request;
+        },
+      },
+      show: {
+        showInDrawer: true,
+      },
     },
   },
 };
