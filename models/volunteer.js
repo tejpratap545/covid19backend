@@ -10,7 +10,7 @@ const VolunteerSchema = mongoose.Schema(
     email: String,
     status: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+
       ref: "Status",
     },
     encryptedPassword: { type: String, required: true },

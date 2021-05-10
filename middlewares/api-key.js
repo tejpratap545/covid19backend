@@ -3,10 +3,11 @@ function apiKey(req, res, next) {
 
   if (apiKey === process.env.API_KEY || "API_KEY") {
     next();
+  } else {
+    res.status(401).json({
+      error: "InValid API Key",
+    });
   }
-  res.status(401).json({
-    error: "InValid API Key",
-  });
 }
 
 module.exports = apiKey;

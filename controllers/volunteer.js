@@ -1,4 +1,5 @@
 const Volunteer = require("../models/volunteer");
+const bcrypt = require("bcrypt");
 
 exports.index = async function (req, res) {
   const volunteers = await Volunteer.find({})
@@ -9,8 +10,14 @@ exports.index = async function (req, res) {
 
 exports.store = async (req, res, _) => {
   try {
-    const volunteer = await Volunteer.create(req.body);
-    res.status(201).json(volunteer);
+    let { encryptedPassword, ...body } = req.body;
+    encryptedPassword = await bcrypt.hash(encryptedPassword, 10);
+    const volunteer = await Volunteer.create({
+      encryptedPassword,
+      ...body,
+      role: "volunteer",
+    });
+    res.status(200).json(volunteer);
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
