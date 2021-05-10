@@ -1,5 +1,6 @@
 const Resource = require("../models/resource");
 const { ObjectId } = require("mongodb");
+const Status = require("../models/status");
 exports.index = async function (req, res) {
   aggregate_options = [];
 
@@ -125,10 +126,10 @@ exports.index = async function (req, res) {
 
 exports.store = async (req, res, _) => {
   try {
-    const status = await Resource.findOne({ name: "pending" });
+    let status = await Status.findOne({ name: "pending" });
 
     if (!status) {
-      status = await Resource.create({ name: "pending" });
+      status = await Status.create({ name: "pending" });
     }
     const resource = await Resource.create({
       ...req.body,
