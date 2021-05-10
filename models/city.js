@@ -10,6 +10,10 @@ const CitySchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Volunteer",
     },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Volunteer",
+    },
   },
   {
     toJSON: {

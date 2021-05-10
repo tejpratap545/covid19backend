@@ -17,7 +17,7 @@ const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
 
     const user = await Volunteer.findOne({
       $or: conditions,
-    });
+    }).populate("superAdmin");
     if (user) {
       const matched = await bcrypt.compare(password, user.encryptedPassword);
       if (matched) {

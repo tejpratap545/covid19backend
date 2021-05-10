@@ -12,14 +12,23 @@ const VolunteerSchema = require("../models/volunteer");
 const StatusSchema = require("../models/status");
 const uploadFeature = require("@admin-bro/upload");
 const path = require("path");
-const admin = require("./resources/admin");
+const common = require("./resources/common");
 
 const volunteer = require("./resources/volunteer");
+const resource = require("./resources/resource");
 module.exports = {
   resources: [
     {
       resource: CitySchema,
-      options: { parent: mongoose, ...admin },
+      options: { parent: mongoose, ...common },
+    },
+    {
+      resource: StatusSchema,
+      options: { parent: mongoose, ...common },
+    },
+    {
+      resource: ResourceSchema,
+      ...resource,
       features: [
         uploadFeature({
           provider: { local: { bucket: path.join(__dirname, "../public") } },
@@ -30,16 +39,8 @@ module.exports = {
       ],
     },
     {
-      resource: StatusSchema,
-      options: { parent: mongoose, ...admin },
-    },
-    {
-      resource: ResourceSchema,
-      options: { parent: mongoose, ...admin },
-    },
-    {
       resource: ResourceTypeSchema,
-      options: { parent: mongoose, ...admin },
+      options: { parent: mongoose, ...common },
     },
     {
       resource: VolunteerSchema,

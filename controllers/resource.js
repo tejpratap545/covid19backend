@@ -34,6 +34,23 @@ exports.index = async function (req, res) {
 
     {
       $lookup: {
+        from: "createdBy",
+        localField: "createdBy",
+        foreignField: "_id",
+        as: "createdBy",
+      },
+    },
+    {
+      $lookup: {
+        from: "updatedBy",
+        localField: "updatedBy",
+        foreignField: "_id",
+        as: "updatedBy",
+      },
+    },
+
+    {
+      $lookup: {
         from: "resourcetypes",
         localField: "resourceType",
         foreignField: "_id",

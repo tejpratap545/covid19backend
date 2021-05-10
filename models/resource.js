@@ -32,7 +32,13 @@ const ResourceSchema = new mongoose.Schema(
       ref: "Status",
     },
 
+    image: String,
+
     createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Volunteer",
+    },
+    updatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Volunteer",
     },

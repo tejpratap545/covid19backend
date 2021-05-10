@@ -7,7 +7,7 @@ const canDeleteVolunteers = ({ currentAdmin, record }) => {
   return (
     currentAdmin &&
     (currentAdmin.role === "superadmin" ||
-      currentAdmin._id === record.param("superAdminId"))
+      currentAdmin._id === record.param("superAdmin"))
   );
 };
 
@@ -16,7 +16,7 @@ const canEditVolunteers = ({ currentAdmin, record }) => {
   return (
     currentAdmin &&
     (currentAdmin.role === "superadmin" ||
-      currentAdmin._id === record.param("superAdminId") ||
+      currentAdmin._id === record.param("superAdmin") ||
       currentAdmin._id === record.param("_id"))
   );
 };
@@ -27,6 +27,18 @@ module.exports = {
     ...sort,
     properties: {
       encryptedPassword: { isVisible: false },
+
+      _id: {
+        isVisible: {
+          show: true,
+          list: false,
+          edit: false,
+          filter: false,
+        },
+      },
+      createdBy: {
+        isVisible: { show: true, list: true, edit: false, filter: true },
+      },
 
       password: {
         type: "string",
@@ -46,7 +58,7 @@ module.exports = {
       new: {
         showInDrawer: true,
         isAccessible: IsAdmin,
-        before: async (request) => {
+        before: async (request, { currentAdmin }) => {
           if (request.payload.password) {
             request.payload = {
               ...request.payload,
@@ -57,6 +69,11 @@ module.exports = {
               password: undefined,
             };
           }
+
+          request.payload = {
+            ...request.payload,
+            createdBy: currentAdmin._id,
+          };
           return request;
         },
       },
