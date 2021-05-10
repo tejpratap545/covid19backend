@@ -125,7 +125,11 @@ exports.index = async function (req, res) {
 
 exports.store = async (req, res, _) => {
   try {
-    const resource = await Resource.create(req.body);
+    const status = Resource.findOneOrCreate({ name: "pending" });
+    const resource = await Resource.create({
+      ...req.body,
+      status: status.id,
+    });
     res.status(201).json(resource);
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
