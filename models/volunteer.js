@@ -28,6 +28,7 @@ const VolunteerSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Volunteer",
     },
+    isActive: Boolean,
     otherProperties: {
       type: Object,
     },

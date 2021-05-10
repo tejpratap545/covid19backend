@@ -16,6 +16,7 @@ exports.store = async (req, res, _) => {
       encryptedPassword,
       ...body,
       role: "volunteer",
+      isActive: false,
     });
     res.status(200).json(volunteer);
   } catch (error) {
