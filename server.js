@@ -9,6 +9,8 @@ const adminBro = new AdminBro(AdminBroOptions);
 const bcrypt = require("bcrypt");
 const Volunteer = require("./models/volunteer");
 
+require("dotenv").config();
+
 const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
   authenticate: async (email, password) => {
     conditions = [{ email: email }, { mobileNumber: email }];
