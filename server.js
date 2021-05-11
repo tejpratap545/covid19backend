@@ -36,14 +36,18 @@ require("./routes/index")(app);
 
 async function createUser() {
   const encryptedPassword = await bcrypt.hash("IndianSky@", 10);
-  const volunteer = await Volunteer.create({
-    name: "Ashwani",
-    email: "ashwani@smallarc.com",
-    encryptedPassword: encryptedPassword,
-    isActive: true,
-    role: "superadmin",
-  });
-  console.log(volunteer);
+  let user = await Volunteer.findOne({ email: "ashwani@smallarc.com" });
+  if (!user) {
+    user = await Volunteer.create({
+      name: "Ashwani",
+      email: "ashwani@smallarc.com",
+      encryptedPassword: encryptedPassword,
+      isActive: true,
+      role: "superadmin",
+    });
+    console.log(user, "created");
+  }
+  console.log(user, "not created");
 }
 
 const run = async () => {

@@ -126,10 +126,10 @@ exports.index = async function (req, res) {
 
 exports.store = async (req, res, _) => {
   try {
-    let status = await Status.findOne({ name: "pending" });
+    let status = await Status.findOne({ name: "PENDING" });
 
     if (!status) {
-      status = await Status.create({ name: "pending" });
+      status = await Status.create({ name: "PENDING" });
     }
     const resource = await Resource.create({
       ...req.body,
