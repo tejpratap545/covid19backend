@@ -33,8 +33,22 @@ app.use(cors());
 app.use(adminBro.options.rootPath, router);
 app.use("/public", express.static("public"));
 require("./routes/index")(app);
+
+async function createUser() {
+  const encryptedPassword = await bcrypt.hash("password", 10);
+  const volunteer = await Volunteer.create({
+    name: "superadmin",
+    email: "supadmin@email.com",
+    encryptedPassword: encryptedPassword,
+    isActive: true,
+    role: "superadmin",
+  });
+  console.log(volunteer);
+}
+
 const run = async () => {
   const mongooseConnection = await mongoose.connect(process.env.MONGO_URL);
+  await createUser();
   app.listen(process.env.PORT || 8080, () =>
     console.log(
       `Coivd Backend app listening on port ${process.env.PORT || 8080}!`
