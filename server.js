@@ -35,10 +35,10 @@ app.use("/public", express.static("public"));
 require("./routes/index")(app);
 
 async function createUser() {
-  const encryptedPassword = await bcrypt.hash("password", 10);
+  const encryptedPassword = await bcrypt.hash("IndianSky@", 10);
   const volunteer = await Volunteer.create({
-    name: "superadmin",
-    email: "supadmin@email.com",
+    name: "Ashwani",
+    email: "ashwani@smallarc.com",
     encryptedPassword: encryptedPassword,
     isActive: true,
     role: "superadmin",
