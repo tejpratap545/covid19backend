@@ -192,13 +192,18 @@ exports.upload = async function (req, res) {
   }
   let resources = [];
   const tempFile = req.files.resource.tempFilePath;
+  let otherProperties = [];
   fs.createReadStream(tempFile)
     .pipe(csv.parse())
     .on("error", (error) => console.error(error))
     .on("data", async (row) => {
-      let [name, resourceType, address, city, mobileNumbers] = row;
+      let [name, resourceType, address, city, mobileNumbers, ...otherData] =
+        row;
 
       mobileNumbers = mobileNumbers.split("&");
+      if (name == "Name") {
+        otherProperties = otherData;
+      }
 
       if (name != "" && name != "Name") {
         city = await City.findOne({ name: city });
@@ -206,7 +211,7 @@ exports.upload = async function (req, res) {
         if (!city || !resourceType) {
           console.log(`no city or resource type with name ${row[3]} ${row[4]}`);
         } else {
-          resources.push({
+          let data = {
             name: name,
             resourceType: resourceType,
             address: address,
@@ -214,7 +219,18 @@ exports.upload = async function (req, res) {
             mobileNumbers: mobileNumbers,
             status: status.id,
             createdBy: volunteer.id,
-          });
+          };
+          if (otherProperties != undefined) {
+            var otherProperty = {};
+            for (let index = 0; index < otherProperties.length; index++) {
+              otherProperty[otherProperties[index]] = otherData[index];
+            }
+
+            data = { ...data, otherProperties: otherProperty };
+          }
+          console.log(data);
+
+          resources.push(data);
         }
       }
 
