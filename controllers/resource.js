@@ -196,11 +196,9 @@ exports.upload = async function (req, res) {
     .pipe(csv.parse())
     .on("error", (error) => console.error(error))
     .on("data", async (row) => {
-      const name = row[0];
-      let resourceType = row[1];
-      const address = row[2];
-      let city = row[3];
-      const mobileNumbers = row[4].split("&");
+      let [name, resourceType, address, city, mobileNumbers] = row;
+
+      mobileNumbers = mobileNumbers.split("&");
 
       if (name != "" && name != "Name") {
         city = await City.findOne({ name: city });
