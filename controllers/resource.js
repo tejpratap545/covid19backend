@@ -1,6 +1,11 @@
 const Resource = require("../models/resource");
 const { ObjectId } = require("mongodb");
 const Status = require("../models/status");
+const csv = require("@fast-csv/parse");
+const fs = require("fs");
+const Volunteer = require("../models/volunteer");
+const City = require("../models/city");
+const ResourceType = require("../models/resourceType");
 exports.index = async function (req, res) {
   aggregate_options = [];
 
@@ -172,4 +177,56 @@ exports.destroy = async function (req, res) {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+exports.upload = async function (req, res) {
+  const volunteer = await Volunteer.findById(req.body.volunteer);
+  if (!volunteer) {
+    res.status(401).json({ msg: "No Such User " });
+    return;
+  }
+  let status = await Status.findOne({ name: "PENDING" });
+
+  if (!status) {
+    status = await Status.create({ name: "PENDING" });
+  }
+  let resources = [];
+  const tempFile = req.files.resource.tempFilePath;
+  fs.createReadStream(tempFile)
+    .pipe(csv.parse())
+    .on("error", (error) => console.error(error))
+    .on("data", async (row) => {
+      const name = row[0];
+      let resourceType = row[1];
+      const address = row[2];
+      let city = row[3];
+      const mobileNumbers = row[4].split("&");
+
+      if (name != "" && name != "Name") {
+        city = await City.findOne({ name: city });
+        resourceType = await ResourceType.findOne({ name: resourceType });
+        if (!city || !resourceType) {
+          console.log(`no city or resource type with name ${row[3]} ${row[4]}`);
+        } else {
+          resources.push({
+            name: name,
+            resourceType: resourceType,
+            address: address,
+            city: city.id,
+            mobileNumbers: mobileNumbers,
+            status: status.id,
+            createdBy: volunteer.id,
+          });
+        }
+      }
+
+      await Resource.create(resources);
+    })
+    .on("end", (rowCount) => console.log(`Parsed ${rowCount} rows`));
+
+  fs.unlink(tempFile, (err) => {
+    if (err) throw err;
+    console.log(`${tempFile}was deleted`);
+  });
+  res.status(200).json({ msg: "data is successfully imported " });
 };

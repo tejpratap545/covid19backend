@@ -8,7 +8,7 @@ const cors = require("cors");
 const adminBro = new AdminBro(AdminBroOptions);
 const bcrypt = require("bcrypt");
 const Volunteer = require("./models/volunteer");
-
+const fileUpload = require("express-fileupload");
 require("dotenv").config();
 
 const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
@@ -31,8 +31,14 @@ const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
   },
   cookiePassword: process.env.cookiePassword || "cookiePassword",
 });
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
 app.use(adminBro.options.rootPath, router);
+app.use(fileUpload({ useTempFiles: true }));
 app.use("/public", express.static("public"));
 require("./routes/index")(app);
 
