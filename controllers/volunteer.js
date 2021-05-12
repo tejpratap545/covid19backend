@@ -1,4 +1,6 @@
+const Status = require("../models/status");
 const Volunteer = require("../models/volunteer");
+
 const bcrypt = require("bcrypt");
 
 exports.index = async function (req, res) {
@@ -10,11 +12,19 @@ exports.index = async function (req, res) {
 
 exports.store = async (req, res, _) => {
   try {
+    let status = await Status.findOne({ name: "PENDING" });
+
+    if (!status) {
+      status = await Status.create({ name: "PENDING" });
+    }
+
     let { encryptedPassword, ...body } = req.body;
     encryptedPassword = await bcrypt.hash(encryptedPassword, 10);
+
     const volunteer = await Volunteer.create({
       encryptedPassword,
       ...body,
+      status: status.id,
       role: "volunteer",
       isActive: false,
     });

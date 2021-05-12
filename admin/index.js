@@ -4,7 +4,7 @@ const upload = require("./resources/upload");
 AdminBro.registerAdapter(AdminBroMongoose);
 const display = require("./resources/display");
 const sort = require("./resources/sort");
-const mongoose = { name: "Covidapp" };
+const mongoose = { name: "CovidAid Database" };
 
 const HelpDeskSchema = require("../models/helpdesk");
 const CitySchema = require("../models/city");
@@ -54,7 +54,7 @@ module.exports = {
       resource: VolunteerSchema,
       ...volunteer,
     },
-  ],
+  ], 
   version: {
     admin: true,
     app: "1.2.3-beta",
@@ -64,7 +64,15 @@ module.exports = {
     softwareBrothers: false,
     logo: "",
   },
-  pages: {},
+  pages: {
+    HomePage: {
+      label: "Home",
+      handler: async () => {
+        return { some: "output" };
+      },
+      component: AdminBro.bundle("./components/dashboard"),
+    }
+  },
   locale: {
     translations: {
       labels: {
