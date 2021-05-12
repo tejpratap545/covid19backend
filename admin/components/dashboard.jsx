@@ -1,12 +1,12 @@
-import { ApiClient } from "admin-bro";
+import { useCurrentAdmin } from "admin-bro";
+
 import { Box, Button, Header } from "@admin-bro/design-system";
 import { useState, useEffect } from "react";
 import Upload from "./upload";
-const api = new ApiClient();
 
 const Dashboard = () => {
   const [helpdesks, setHelpDesks] = useState({});
-  // const [isLoaded, setIsLoaded] = useState(false)
+  const [currentAdmin, setCurrentAdmin] = useCurrentAdmin();
 
   useEffect(() => {
     function loadData() {
@@ -19,6 +19,8 @@ const Dashboard = () => {
           setHelpDesks(result);
         });
     }
+
+    console.log(currentAdmin);
 
     loadData();
   }, []);
@@ -47,13 +49,17 @@ const Dashboard = () => {
             ))}
         </div>
 
-        <div style={{ margin: "20px 0" }}>
+        <div style={{ margin: "20px 0", display: "flex", justifyContent: "center" }}>
           <Button>Create Helpdesk</Button>
         </div>
 
-        <Box>
-          <Upload label="Upload resource data" api="resource"></Upload>
-        </Box>
+        {currentAdmin && currentAdmin.role != "volunteer" ? (
+          <Box>
+            <Upload label="Upload resource data" api="resource"></Upload>
+          </Box>
+        ) : (
+          ``
+        )}
       </Box>
     </Box>
   );

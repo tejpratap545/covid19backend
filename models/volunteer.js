@@ -10,13 +10,13 @@ const VolunteerSchema = mongoose.Schema(
     email: String,
     status: {
       type: mongoose.Schema.Types.ObjectId,
-
       ref: "Status",
+      required: true,
     },
     encryptedPassword: { type: String, required: true },
     role: {
       type: String,
-      enum: ["superadmin", "admin", "volunteer"],
+      enum: ["superadmin", "admin", "dataentry", "volunteer"],
       required: true,
     },
     superAdmin: {

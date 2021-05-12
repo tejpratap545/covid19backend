@@ -1,9 +1,10 @@
 const bcrypt = require("bcrypt");
 const display = require("./display");
 const sort = require("./sort");
-const mongoose = { name: "Covidapp", icon: "SpineLabel" };
+const mongoose = { name: "CovidAid Database" };
 const { IsAdmin, IsSuperAdmin } = require("./permission");
 const volunteer = require("../../models/volunteer");
+
 const canDoResources = ({ currentAdmin, record }) => {
   let result =
     currentAdmin &&
@@ -61,7 +62,6 @@ module.exports = {
       show: {
         showInDrawer: true,
       },
-
       new: {
         showInDrawer: true,
 
