@@ -4,7 +4,8 @@ const bcrypt = require("bcrypt");
 exports.index = async function (req, res) {
   const volunteers = await Volunteer.find({})
     .populate("superAdmin")
-    .populate("city");
+    .populate("city")
+    .populate("status");
   res.status(200).json(volunteers);
 };
 
@@ -28,7 +29,8 @@ exports.show = async function (req, res) {
   try {
     const volunteer = await Volunteer.findById(req.params.id)
       .populate("superAdmin")
-      .populate("city");
+      .populate("city")
+      .populate("status");
 
     if (!volunteer)
       return res.status(401).json({ message: "Volunteer does not exist" });
