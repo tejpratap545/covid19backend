@@ -20,7 +20,7 @@ const Dashboard = () => {
         });
     }
 
-    console.log(currentAdmin)
+    console.log(currentAdmin);
 
     loadData();
   }, []);
@@ -49,13 +49,17 @@ const Dashboard = () => {
             ))}
         </div>
 
-        <div style={{ margin: "20px 0" }}>
+        <div style={{ margin: "20px 0", display: "flex", justifyContent: "center" }}>
           <Button>Create Helpdesk</Button>
         </div>
 
-        <Box>
-          <Upload label="Upload resource data" api="resource"></Upload>
-        </Box>
+        {currentAdmin && currentAdmin.role != "volunteer" ? (
+          <Box>
+            <Upload label="Upload resource data" api="resource"></Upload>
+          </Box>
+        ) : (
+          ``
+        )}
       </Box>
     </Box>
   );
