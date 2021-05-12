@@ -1,7 +1,7 @@
 import { ApiClient } from "admin-bro";
 import { Box, Button, Header } from "@admin-bro/design-system";
 import { useState, useEffect } from "react";
-
+import Upload from "./upload";
 const api = new ApiClient();
 
 const Dashboard = () => {
@@ -47,9 +47,13 @@ const Dashboard = () => {
             ))}
         </div>
 
-        <div style={{margin: '20px 0'}}>
+        <div style={{ margin: "20px 0" }}>
           <Button>Create Helpdesk</Button>
         </div>
+
+        <Box>
+          <Upload label="Upload resource data" api="resource"></Upload>
+        </Box>
       </Box>
     </Box>
   );
