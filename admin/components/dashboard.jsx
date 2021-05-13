@@ -80,6 +80,9 @@ const Dashboard = () => {
         {currentAdmin.role !== "volunteer" ? (
           <Box>
             <Upload label="Upload resource data" api="resource"></Upload>
+            <a href="/public/covidaid.csv" download>
+              Download excel formats
+            </a>
           </Box>
         ) : (
           ``
