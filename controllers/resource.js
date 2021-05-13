@@ -234,7 +234,7 @@ exports.upload = async function (req, res) {
         }
       }
 
-      await Resource.create(resources);
+      await Resource.insertMany(resources);
     })
     .on("end", (rowCount) => console.log(`Parsed ${rowCount} rows`));
 
