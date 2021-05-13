@@ -35,9 +35,9 @@ module.exports = {
   },
 
   actions: {
-    // list: {
-    //   isAccessible: IsAdmin,
-    // },
+    list: {
+      isAccessible: IsAdmin,
+    },
     new: {
       showInDrawer: true,
       isAccessible: IsAdmin,
@@ -63,7 +63,7 @@ module.exports = {
         return request;
       },
     },
-    delete: { isAccessible: IsSuperAdmin },
+    // delete: { isAccessible: IsSuperAdmin },
     show: {
       showInDrawer: true,
     },

@@ -51,6 +51,25 @@ exports.show = async function (req, res) {
   }
 };
 
+exports.updateRole = async function (req, res) {
+  try {
+    let status = await Status.findOne({ name: "INACTIVE" });
+
+    const volunteer = await Volunteer.updateOne(
+      { _id: req.params.id },
+      {
+        status: status._id,
+        superAdmin: req.params.id,
+        role: req.query.role,
+      }
+    );
+
+    res.status(202).json(volunteer);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.update = async function (req, res) {
   try {
     const volunteer = await Volunteer.findByIdAndUpdate(req.params.id, {
