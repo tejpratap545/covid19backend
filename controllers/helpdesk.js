@@ -1,5 +1,6 @@
 const City = require("../models/helpdesk");
 const Volunteer = require("../models/volunteer");
+const Status = require("../models/status");
 
 exports.index = async function (req, res) {
   const cities = await City.find({});
@@ -8,16 +9,22 @@ exports.index = async function (req, res) {
 
 exports.join = async function (req, res) {
   try {
-    const helpdesk = await City.findById(req.params.helpdeskid)
+    let helpdesk = await City.findById(req.params.helpdeskid)
+    let status = await Status.findOne({ name: "INACTIVE" });
+
+    if (!status) {
+      status = await Status.create({ name: "INACTIVE" });
+    }
 
     const volunteer = await Volunteer.updateOne(
       { _id: req.params.userid },
       {
+        status: status.id,
         superAdmin: helpdesk.createdBy,
       }
     );
 
-    res.status(200).json({ cities });
+    res.status(200).json({ success: true });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

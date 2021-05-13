@@ -55,10 +55,14 @@ exports.updateRole = async function (req, res) {
   try {
     let status = await Status.findOne({ name: "INACTIVE" });
 
+    if (!status) {
+      status = await Status.create({ name: "INACTIVE" });
+    }
+    
     const volunteer = await Volunteer.updateOne(
       { _id: req.params.id },
       {
-        status: status._id,
+        status: status.id,
         superAdmin: req.params.id,
         role: req.query.role,
       }

@@ -35,9 +35,9 @@ const Dashboard = () => {
     <Box variant="grey">
       <Header.H1 style={{ textAlign: "center" }}>Dashboard</Header.H1>
       <Box variant="white">
-        {status && status.status.name == "PENDING" ? (
+        {!joined && status && status.status.name == "PENDING" ? (
           <div className="helpdesk-container" style={{ padding: "10px 0" }}>
-            {!joined && helpdesks.cities &&
+            { helpdesks.cities &&
               helpdesks.cities.map((item) => (
                 <div key={item._id} style={{ margin: "10px 0" }}>
                   <Box variant="card">
@@ -74,7 +74,9 @@ const Dashboard = () => {
             </div>
           </div>
         ) : (
-          ``
+          `
+          <p>You have successfully joined a helpdesk now you can receive phone calls from patients</p>
+          `
         )}
 
         {currentAdmin.role !== "volunteer" ? (
