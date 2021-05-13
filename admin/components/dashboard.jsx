@@ -74,9 +74,7 @@ const Dashboard = () => {
             </div>
           </div>
         ) : (
-          `
-          <p>You have successfully joined a helpdesk now you can receive phone calls from patients</p>
-          `
+          <Header.H3>You have successfully joined a helpdesk now you can receive phone calls from patients</Header.H3>
         )}
 
         {currentAdmin.role !== "volunteer" ? (
