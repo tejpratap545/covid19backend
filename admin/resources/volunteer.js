@@ -104,55 +104,55 @@ module.exports = {
       bulkDelete: {
         isAccessible: IsSuperAdmin,
       },
-      activate: {
-        actionType: "record",
-        icon: "checkmarkOutline32",
-        isAccessible: ({ currentAdmin, record }) => {
-          return (
-            currentAdmin &&
-            currentAdmin.role !== "volunteer" &&
-            record.params.role !== "superadmin" &&
-            record.params.isActive === false
-          );
-        },
-        isVisible: true,
-        handler: async (request, response, context) => {
-          const user = await volunteer.findByIdAndUpdate(
-            context.record.params.id,
-            {
-              $set: {
-                isActive: true,
-                superAdmin: context._admin.id,
-              },
-            }
-          );
-          return { record: context.record.toJSON(user) };
-        },
-      },
-      deactivate: {
-        actionType: "record",
-        icon: "Subtract32",
-        isAccessible: ({ currentAdmin, record }) => {
-          return (
-            currentAdmin &&
-            currentAdmin.role !== "volunteer" &&
-            record.params.role !== "superadmin" &&
-            record.params.isActive === true
-          );
-        },
-        isVisible: true,
-        handler: async (request, response, context) => {
-          const user = await volunteer.findByIdAndUpdate(
-            context.record.params.id,
-            {
-              $set: {
-                isActive: false,
-              },
-            }
-          );
-          return { record: context.record.toJSON(user) };
-        },
-      },
+      // activate: {
+      //   actionType: "record",
+      //   icon: "checkmarkOutline32",
+      //   isAccessible: ({ currentAdmin, record }) => {
+      //     return (
+      //       currentAdmin &&
+      //       currentAdmin.role !== "volunteer" &&
+      //       record.params.role !== "superadmin" &&
+      //       record.params.isActive === false
+      //     );
+      //   },
+      //   isVisible: true,
+      //   handler: async (request, response, context) => {
+      //     const user = await volunteer.findByIdAndUpdate(
+      //       context.record.params.id,
+      //       {
+      //         $set: {
+      //           isActive: true,
+      //           superAdmin: context._admin.id,
+      //         },
+      //       }
+      //     );
+      //     return { record: context.record.toJSON(user) };
+      //   },
+      // },
+      // deactivate: {
+      //   actionType: "record",
+      //   icon: "Subtract32",
+      //   isAccessible: ({ currentAdmin, record }) => {
+      //     return (
+      //       currentAdmin &&
+      //       currentAdmin.role !== "volunteer" &&
+      //       record.params.role !== "superadmin" &&
+      //       record.params.isActive === true
+      //     );
+      //   },
+      //   isVisible: true,
+      //   handler: async (request, response, context) => {
+      //     const user = await volunteer.findByIdAndUpdate(
+      //       context.record.params.id,
+      //       {
+      //         $set: {
+      //           isActive: false,
+      //         },
+      //       }
+      //     );
+      //     return { record: context.record.toJSON(user) };
+      //   },
+      // },
     },
   },
 };
