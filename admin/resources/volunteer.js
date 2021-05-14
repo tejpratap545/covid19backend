@@ -18,6 +18,7 @@ const canEditVolunteers = ({ currentAdmin, record }) => {
   return (
     currentAdmin &&
     (currentAdmin.role === "superadmin" ||
+      currentAdmin.role === "admin" ||
       currentAdmin._id === record.param("superAdmin") ||
       currentAdmin._id === record.param("_id"))
   );
