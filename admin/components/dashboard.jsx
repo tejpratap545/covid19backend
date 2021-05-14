@@ -37,7 +37,7 @@ const Dashboard = () => {
       <Box variant="white">
         {!joined && status && status.status.name == "PENDING" ? (
           <div className="helpdesk-container" style={{ padding: "10px 0" }}>
-            { helpdesks.cities &&
+            {helpdesks.cities &&
               helpdesks.cities.map((item) => (
                 <div key={item._id} style={{ margin: "10px 0" }}>
                   <Box variant="card">
@@ -49,13 +49,19 @@ const Dashboard = () => {
                       }}
                     >
                       <h2 style={{ fontSize: "18px" }}>{item.name}</h2>
-                      <Button onClick={() => {
-                          fetch(`/api/helpdesk/${item._id}-${currentAdmin._id}?API-KEY=FYMmbMXfaB_eFw`)
-                           .then((res) => res.json())
-                           .then((result) => {
-                             setJoined(true);
-                           });
-                      }}>Join</Button>
+                      <Button
+                        onClick={() => {
+                          fetch(
+                            `/api/helpdesk/${item._id}-${currentAdmin._id}?API-KEY=FYMmbMXfaB_eFw`
+                          )
+                            .then((res) => res.json())
+                            .then((result) => {
+                              setJoined(true);
+                            });
+                        }}
+                      >
+                        Join
+                      </Button>
                     </div>
                   </Box>
                 </div>
@@ -74,18 +80,20 @@ const Dashboard = () => {
             </div>
           </div>
         ) : (
-          <Header.H3>You have successfully joined a helpdesk now you can receive phone calls from patients</Header.H3>
-        )}
-
-        {currentAdmin.role !== "volunteer" ? (
-          <Box>
-            <Upload label="Upload resource data" api="resource"></Upload>
-            <a href="/public/covidaid.csv" download>
-              Download excel formats
-            </a>
-          </Box>
-        ) : (
-          ``
+          <div>
+            <Box>
+              <Header.H3>
+                You have successfully joined a helpdesk now you can receive
+                phone calls from patients
+              </Header.H3>
+            </Box>
+            <Box>
+              <Upload label="Upload resource data" api="resource"></Upload>
+              <a href="/public/covidaid.csv" download>
+                Download excel formats
+              </a>
+            </Box>
+          </div>
         )}
 
         <Helpdesk
