@@ -6,7 +6,6 @@ const ResourceTypeSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    image: String,
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Volunteer",

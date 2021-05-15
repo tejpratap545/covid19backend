@@ -31,9 +31,6 @@ const ResourceSchema = new mongoose.Schema(
       required: true,
       ref: "Status",
     },
-
-    image: String,
-
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Volunteer",
