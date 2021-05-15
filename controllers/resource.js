@@ -213,7 +213,7 @@ exports.upload = async function (req, res) {
         } else {
           let data = {
             name: name,
-            resourceType: resourceType,
+            resourceType: resourceType.id,
             address: address,
             city: city.id,
             mobileNumbers: mobileNumbers,

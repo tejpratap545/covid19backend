@@ -21,6 +21,9 @@ const volunteer = require("./resources/volunteer");
 const resource = require("./resources/resource");
 
 module.exports = {
+  rootPath: "/",
+  logoutPath: "/logout",
+  loginPath: "/login",
   resources: [
     {
       resource: HelpDeskSchema,
@@ -54,7 +57,7 @@ module.exports = {
       resource: VolunteerSchema,
       ...volunteer,
     },
-  ], 
+  ],
   version: {
     admin: true,
     app: "1.2.3-beta",
@@ -71,7 +74,7 @@ module.exports = {
         return { some: "output" };
       },
       component: AdminBro.bundle("./components/dashboard"),
-    }
+    },
   },
   locale: {
     translations: {
