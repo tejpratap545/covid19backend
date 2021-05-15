@@ -21,9 +21,7 @@ const volunteer = require("./resources/volunteer");
 const resource = require("./resources/resource");
 
 module.exports = {
-  rootPath: "/",
-  logoutPath: "/logout",
-  loginPath: "/login",
+  rootPath: "/admin",
   resources: [
     {
       resource: HelpDeskSchema,
