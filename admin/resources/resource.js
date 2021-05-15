@@ -23,7 +23,10 @@ const canDoResources = ({ currentAdmin, record }) => {
           }
         }
       });
+      
+      result = record.param("createdBy") === currentAdmin._id;
   }
+
   return result;
 };
 
