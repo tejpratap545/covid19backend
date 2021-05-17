@@ -230,11 +230,12 @@ exports.upload = async function (req, res) {
           }
           console.log(data);
 
-          resources.push(data);
+          const res = await Resource.findOneAndUpdate({ name: name }, data, {
+            upsert: true,
+            setDefaultsOnInsert: true,
+          });
         }
       }
-
-      await Resource.insertMany(resources);
     })
     .on("end", (rowCount) => console.log(`Parsed ${rowCount} rows`));
 
