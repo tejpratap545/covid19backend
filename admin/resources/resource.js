@@ -5,30 +5,30 @@ const mongoose = { name: "CovidAid Database" };
 const { IsAdmin, IsSuperAdmin } = require("./permission");
 const volunteer = require("../../models/volunteer");
 
-const canDoResources = ({ currentAdmin, record }) => {
-  let result =
-    currentAdmin &&
-    (currentAdmin.role === "superadmin" ||
-      currentAdmin._id === record.param("_id"));
+// const canDoResources = ({ currentAdmin, record }) => {
+//   let result =
+//     currentAdmin &&
+//     (currentAdmin.role === "superadmin" ||
+//       currentAdmin._id === record.param("_id"));
 
-  //   not work  volunteer -> admin can edit / delete resources
-  if (!result && record.param("createdBy")) {
-    volunteer
-      .findById(record.param("createdBy"))
-      .populate("superAdmin")
-      .exec((err, user) => {
-        if (user != null) {
-          if (user.superAdmin != null) {
-            result = user.superAdmin.id === currentAdmin._id;
-          }
-        }
-      });
+//   //   not work  volunteer -> admin can edit / delete resources
+//   if (!result && record.param("createdBy")) {
+//     volunteer
+//       .findById(record.param("createdBy"))
+//       .populate("superAdmin")
+//       .exec((err, user) => {
+//         if (user != null) {
+//           if (user.superAdmin != null) {
+//             result = user.superAdmin.id === currentAdmin._id;
+//           }
+//         }
+//       });
       
-      result = record.param("createdBy") === currentAdmin._id;
-  }
+//       result = record.param("createdBy") === currentAdmin._id;
+//   }
 
-  return result;
-};
+//   return result;
+// };
 
 module.exports = {
   options: {
@@ -80,7 +80,7 @@ module.exports = {
       },
       edit: {
         showInDrawer: true,
-        isAccessible: canDoResources,
+        isAccessible: true,
         before: async (request, { currentAdmin }) => {
           request.payload = {
             ...request.payload,
