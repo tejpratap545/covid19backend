@@ -90,7 +90,7 @@ module.exports = {
           return request;
         },
       },
-      delete: { isAccessible: canDoResources },
+      delete: { isAccessible: true },
 
       bulkDelete: {
         isAccessible: IsSuperAdmin,
