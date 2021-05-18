@@ -39,6 +39,7 @@ const ResourceSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Volunteer",
     },
+    { timestamps: true },
     otherProperties: {
       type: Object,
     },
