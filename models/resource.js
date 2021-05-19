@@ -57,7 +57,7 @@ const ResourceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 ResourceSchema.plugin(aggregatePaginate);
-ResourceSchema.index({ name: 1, address: 1 }); // schema level
+ResourceSchema.index({ status: 1, name: 1, address: 1 }); // schema level
 const Resource = mongoose.model("Resource", ResourceSchema);
 
 module.exports = Resource;

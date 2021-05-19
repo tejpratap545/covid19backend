@@ -28,7 +28,6 @@ exports.index = async function (req, res) {
         as: "city",
       },
     },
-
     {
       $lookup: {
         from: "status",
@@ -37,7 +36,6 @@ exports.index = async function (req, res) {
         as: "status",
       },
     },
-
     {
       $lookup: {
         from: "createdBy",
@@ -54,7 +52,6 @@ exports.index = async function (req, res) {
         as: "updatedBy",
       },
     },
-
     {
       $lookup: {
         from: "resourcetypes",
