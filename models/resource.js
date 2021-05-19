@@ -40,7 +40,7 @@ const ResourceSchema = new mongoose.Schema(
       ref: "Volunteer",
     },
     otherProperties: {
-      type: Object,
+      type: String,
     },
   },
   { timestamps: true },
