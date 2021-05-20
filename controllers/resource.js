@@ -119,6 +119,11 @@ exports.index = async function (req, res) {
     });
   }
 
+  //sort
+  aggregate_options.push({
+    $sort: { "status.order": 1, updatedAt: -1, createdAt: -1 },
+  });
+
   const myAggregate = Resource.aggregate(aggregate_options);
   const result = await Resource.aggregatePaginate(myAggregate, options);
   await Resource.populate(result, { path: "city" });
