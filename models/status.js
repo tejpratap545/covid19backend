@@ -6,6 +6,11 @@ const StatusSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    order: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Volunteer",
