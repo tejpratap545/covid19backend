@@ -217,14 +217,14 @@ exports.upload = async function (req, res) {
             status: status.id,
             createdBy: volunteer.id,
           };
-          if (otherProperties != undefined) {
-            var otherProperty = {};
-            for (let index = 0; index < otherProperties.length; index++) {
-              otherProperty[otherProperties[index]] = otherData[index];
-            }
+          // if (otherProperties != undefined) {
+          //   var otherProperty = {};
+          //   for (let index = 0; index < otherProperties.length; index++) {
+          //     otherProperty[otherProperties[index]] = otherData[index];
+          //   }
 
-            data = { ...data, otherProperties: otherProperty };
-          }
+          //   data = { ...data, otherProperties: otherProperty };
+          // }
           console.log(data);
 
           const res = await Resource.findOneAndUpdate({ name: name }, data, {
